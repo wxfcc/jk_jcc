@@ -4,7 +4,7 @@
 #include <ctype.h>
 #include <assert.h>
 
-#define error(fmt...) \
+#define error(fmt,...) \
 	do { \
 		fprintf(stderr, fmt); \
 		abort(); \
@@ -95,8 +95,8 @@ int token, look;
 size_t stack_size;
 unsigned long token_value;
 char *token_str = NULL;
-struct value *registers[MAX_REG] = {};
-int reg_locked[MAX_REG] = {};
+struct value *registers[MAX_REG] = {0};
+int reg_locked[MAX_REG] = {0};
 
 /* Search for the register where the value is stored */
 int search_reg(const struct value *val)
@@ -632,7 +632,7 @@ void function_call(struct value *fun)
 	if (fun->type != TYPE_FUNCTION)
 		error("calling a non-function: %s\n", fun->ident);
 
-	struct value *values[MAX_REG] = {};
+	struct value *values[MAX_REG] = {0};
 	struct value *arg = fun->args;
 	int i = 0;
 	while (!check(')')) {
